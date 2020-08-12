@@ -6,11 +6,23 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 
 /**
- * Simple but highly configurable [androidx.recyclerview.widget.ListAdapter].
+ * An implementation of [androidx.recyclerview.widget.ListAdapter].
  *
- * @param viewHolderFactory - object that is able to create ViewHolders for given viewTypes
- * @param diffCallback - an implementation od DiffUtil.ItemCallback to be used when new data
- * will be submitted to be displayed.
+ * This is a class that connects all the abstractions introduced in this library into one customizable
+ * adapter. There is a great chance that you won't need to create any other Adapter class anymore.
+ *
+ * This is how [SimpleListAdapter] utilizes [RecyclerItem] and [AbstractViewHolder]:
+ * - [onCreateViewHolder] creates Views by providing [RecyclerItem.viewHolderType] to a [LayoutInflater].
+ * A newly created view is passed to [ViewHolderFactory.create] with corresponding [RecyclerItem.viewHolderType].
+ * [ViewHolderFactory] creates [AbstractViewHolder] that is used by RecyclerView.
+ * - [onBindViewHolder] for given position gets [RecyclerItem] from the data set and passes it to
+ * [AbstractViewHolder.bind] or [AbstractUpdatableViewHolder.bind] method in order to update ViewHolder.
+ *
+ * @param viewHolderFactory is an object that is able to create [AbstractViewHolder] for given
+ * [RecyclerItem.viewHolderType] from the data set.
+ * @param diffCallback an implementation of [androidx.recyclerview.widget.DiffUtil.ItemCallback]
+ * to be used when new data sets are submitted. By default [SimpleDiffCallback] is used.
+ * @param T is a class that implements [RecyclerItem] or an interface that extends [RecyclerItem].
  */
 open class SimpleListAdapter<T : RecyclerItem>(
     private val viewHolderFactory: ViewHolderFactory<T>,

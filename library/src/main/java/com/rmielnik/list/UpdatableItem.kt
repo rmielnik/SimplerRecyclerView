@@ -1,12 +1,17 @@
 package com.rmielnik.list
 
 /**
- * Represents item that is able to create update payload from new item state.
+ * Represents an object that can generate update payload by comparing itself with an object in
+ * up-to-date state.
+ *
+ * [getUpdatePayload] is called by [SimpleDiffCallback.getChangePayload].
+ *
+ * @see SimpleDiffCallback
  */
 interface UpdatableItem {
 
     /**
-     * Creates update payload.
+     * Creates update payload. Called by [SimpleDiffCallback.getChangePayload]
      */
     fun getUpdatePayload(newItem: Any): Any?
 }
