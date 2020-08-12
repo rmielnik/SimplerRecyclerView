@@ -5,9 +5,10 @@ import com.rmielnik.list.RecyclerItem
 import com.rmielnik.list.UpdatableItem
 
 data class ClockItem(
-    override val id: Long,
     val elapsedTimeMs: Long
 ) : RecyclerItem, UpdatableItem {
+
+    override val id = ClockItem::class
 
     override val viewHolderType = R.layout.item_clock
 

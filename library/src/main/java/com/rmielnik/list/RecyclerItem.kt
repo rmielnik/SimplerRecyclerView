@@ -10,7 +10,7 @@ interface RecyclerItem {
     /**
      * Identifier of the item.
      */
-    val id: Long
+    val id: Any
 
     /**
      * Value of a layout resource with view that is dedicated to represent this item's data.
