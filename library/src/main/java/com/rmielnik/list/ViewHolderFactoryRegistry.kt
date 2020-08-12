@@ -8,9 +8,9 @@ import kotlin.reflect.KClass
  * Util class for creating ViewHolderFactory.
  */
 @Suppress("unused")
-class ViewHolderFactoryRegistry(
-    private val registry: HashMap<Int, (View) -> AbstractViewHolder<*>> = HashMap()
-) : ViewHolderFactory<RecyclerItem> {
+class ViewHolderFactoryRegistry : ViewHolderFactory<RecyclerItem> {
+
+    internal val registry: MutableMap<Int, (View) -> AbstractViewHolder<*>> = HashMap()
 
     @Suppress("UNCHECKED_CAST")
     override fun create(view: View, @LayoutRes viewType: Int): AbstractViewHolder<RecyclerItem> =
@@ -39,3 +39,13 @@ class ViewHolderFactoryRegistry(
         registry[viewType] = factoryMethod
     }
 }
+
+/**
+ * Creates new ViewHolderFactoryRegistry with all rules in operands created by calling
+ * register or registerSafe functions.
+ */
+operator fun ViewHolderFactoryRegistry.plus(other: ViewHolderFactoryRegistry) =
+    ViewHolderFactoryRegistry().also {
+        it.registry += registry
+        it.registry += other.registry
+    }

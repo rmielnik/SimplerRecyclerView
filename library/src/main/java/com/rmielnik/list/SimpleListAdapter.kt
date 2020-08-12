@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import com.rmielnik.list.AbstractUpdatableViewHolder
 
 /**
  * Simple but highly configurable [androidx.recyclerview.widget.ListAdapter].
@@ -37,6 +36,6 @@ open class SimpleListAdapter<T : RecyclerItem>(
     ) = if (holder is AbstractUpdatableViewHolder) {
         holder.bind(getItem(position), payloads)
     } else {
-        super.onBindViewHolder(holder, position, payloads)
+        holder.bind(getItem(position))
     }
 }
