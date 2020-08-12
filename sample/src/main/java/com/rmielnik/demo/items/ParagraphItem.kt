@@ -4,7 +4,7 @@ import com.rmielnik.demo.R
 import com.rmielnik.list.RecyclerItem
 
 data class ParagraphItem(
-    override val id: Long,
+    override val id: Int,
     val text: CharSequence
 ) : RecyclerItem {
 
