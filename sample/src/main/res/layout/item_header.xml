@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingHorizontal="@dimen/distance_2x"
-    android:paddingVertical="@dimen/distance"
+    android:paddingHorizontal="@dimen/distance"
+    android:paddingVertical="@dimen/distance_2x"
     android:textAppearance="?android:textAppearanceMedium"
-    android:textStyle="bold"
     tools:text="Sample header" />

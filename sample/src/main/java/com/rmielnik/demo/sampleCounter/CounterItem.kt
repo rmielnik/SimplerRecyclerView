@@ -1,19 +1,19 @@
-package com.rmielnik.demo.items
+package com.rmielnik.demo.sampleCounter
 
 import com.rmielnik.demo.R
 import com.rmielnik.list.RecyclerItem
 import com.rmielnik.list.UpdatableItem
 
-data class ClockItem(
+data class CounterItem(
     val elapsedTimeMs: Long
 ) : RecyclerItem, UpdatableItem {
 
-    override val id = ClockItem::class
+    override val id = CounterItem::class
 
     override val viewHolderType = R.layout.item_clock
 
     override fun getUpdatePayload(newItem: Any) =
-        if (newItem is ClockItem) {
+        if (newItem is CounterItem) {
             newItem.elapsedTimeMs
         } else {
             null

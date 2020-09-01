@@ -1,8 +1,7 @@
-package com.rmielnik.demo.viewholders
+package com.rmielnik.demo.sampleViewHolderFactoryRegistry
 
 import android.view.View
 import com.rmielnik.demo.databinding.ItemHeaderBinding
-import com.rmielnik.demo.items.HeaderItem
 import com.rmielnik.list.AbstractViewHolder
 
 class HeaderViewHolder(view: View) : AbstractViewHolder<HeaderItem>(view) {

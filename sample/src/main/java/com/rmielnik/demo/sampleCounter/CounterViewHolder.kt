@@ -1,14 +1,14 @@
-package com.rmielnik.demo.viewholders
+package com.rmielnik.demo.sampleCounter
 
+import android.annotation.SuppressLint
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.rmielnik.demo.databinding.ItemClockBinding
-import com.rmielnik.demo.items.ClockItem
 import com.rmielnik.list.AbstractUpdatableViewHolder
 import java.util.concurrent.TimeUnit
 
-class ClockViewHolder(view: View, onResetClick: () -> Unit) :
-    AbstractUpdatableViewHolder<ClockItem>(view) {
+class CounterViewHolder(view: View, onResetClick: () -> Unit) :
+    AbstractUpdatableViewHolder<CounterItem>(view) {
 
     private val binding = ItemClockBinding.bind(view)
         .apply {
@@ -19,17 +19,18 @@ class ClockViewHolder(view: View, onResetClick: () -> Unit) :
             }
         }
 
-    override fun bind(item: ClockItem, updatePayloads: List<Any>?) {
+    override fun bind(item: CounterItem, updatePayloads: List<Any>?) {
         val latestUpdateTime = updatePayloads?.lastOrNull() ?: return bind(item)
         if (latestUpdateTime is Long) {
             updateElapsedTime(latestUpdateTime)
         }
     }
 
-    override fun bind(item: ClockItem) {
+    override fun bind(item: CounterItem) {
         updateElapsedTime(item.elapsedTimeMs)
     }
 
+    @SuppressLint("SetTextI18n")
     private fun updateElapsedTime(elapsedTimeMs: Long) {
         val hours =
             (TimeUnit.HOURS.convert(elapsedTimeMs, TimeUnit.MILLISECONDS) % 24).toPaddedString()

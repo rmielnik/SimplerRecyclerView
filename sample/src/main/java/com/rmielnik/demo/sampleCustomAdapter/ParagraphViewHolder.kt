@@ -1,8 +1,7 @@
-package com.rmielnik.demo.viewholders
+package com.rmielnik.demo.sampleCustomAdapter
 
 import android.view.View
 import android.widget.TextView
-import com.rmielnik.demo.items.ParagraphItem
 import com.rmielnik.list.AbstractViewHolder
 
 class ParagraphViewHolder(view: View) : AbstractViewHolder<ParagraphItem>(view) {
