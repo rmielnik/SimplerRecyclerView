@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Sample</string>
     <string name="cta_reset">Reset</string>
+    <string name="cta_shuffle">Shuffle</string>
+    <string name="cta_sort">Sort</string>
     <string name="toast_reset_time">Reset counter</string>
 </resources>

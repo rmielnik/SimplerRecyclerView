@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/distance"
-    android:textAppearance="?android:textAppearanceSmall"
-    tools:text="Sample paragraph" />
+    android:paddingHorizontal="@dimen/distance"
+    android:paddingVertical="@dimen/distance_2x"
+    android:textAppearance="?android:textAppearanceMedium"
+    tools:text="Sample text" />

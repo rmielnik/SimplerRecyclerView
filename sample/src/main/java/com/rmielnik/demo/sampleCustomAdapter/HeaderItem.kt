@@ -1,4 +1,4 @@
-package com.rmielnik.demo.items
+package com.rmielnik.demo.sampleCustomAdapter
 
 import com.rmielnik.demo.R
 import com.rmielnik.list.RecyclerItem
