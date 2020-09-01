@@ -9,6 +9,7 @@ import com.rmielnik.demo.sampleCustomAdapter.CustomAdapterClassActivity
 import com.rmielnik.demo.sampleViewHolderFactoryRegistry.ViewHolderFactoryRegistryActivity
 import com.rmielnik.list.SimpleListAdapter
 import com.rmielnik.list.ViewHolderFactoryRegistry
+import com.rmielnik.list.plus
 
 class MainActivity : AppCompatActivity(R.layout.screen_recycler) {
 
@@ -18,16 +19,19 @@ class MainActivity : AppCompatActivity(R.layout.screen_recycler) {
             description = "Presents custom adapter",
             targetActivityClass = CustomAdapterClassActivity::class.java
         ),
+        DividerItem(1),
         SampleItem(
             title = "ViewHolderFactoryRegistry sample",
             description = "Presents how to utilize ViewHolderFactoryRegistry with SimpleListAdapter",
             targetActivityClass = ViewHolderFactoryRegistryActivity::class.java
         ),
+        DividerItem(2),
         SampleItem(
             title = "Pass callbacks to ViewHolders",
             description = "Presents how to pass click listeners to view holders",
             targetActivityClass = CallbacksActivity::class.java
         ),
+        DividerItem(3),
         SampleItem(
             title = "ViewHolder updates with payloads",
             description = "Presents how to use payload to update view holders",
@@ -41,7 +45,8 @@ class MainActivity : AppCompatActivity(R.layout.screen_recycler) {
         val recycler = findViewById<RecyclerView>(R.id.recycler)
         val factory = ViewHolderFactoryRegistry().apply {
             register(R.layout.item_sample) { SampleViewHolder(it) }
-        }
+            register(R.layout.item_sample) { SampleViewHolder(it) }
+        } + DIVIDER_FACTORY
 
         val adapter = SimpleListAdapter(factory)
         adapter.submitList(samples)

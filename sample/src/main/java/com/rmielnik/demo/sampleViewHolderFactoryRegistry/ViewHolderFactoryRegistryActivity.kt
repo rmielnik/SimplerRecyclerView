@@ -3,6 +3,8 @@ package com.rmielnik.demo.sampleViewHolderFactoryRegistry
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.rmielnik.demo.DIVIDER_FACTORY
+import com.rmielnik.demo.DividerItem
 import com.rmielnik.demo.R
 import com.rmielnik.list.SimpleListAdapter
 import com.rmielnik.list.ViewHolderFactoryRegistry
@@ -20,7 +22,9 @@ class ViewHolderFactoryRegistryActivity : AppCompatActivity() {
     ).mapIndexed { index, text -> ParagraphItem(index, text) }
 
     private val safelyRegisteredItems = listOf(
+        DividerItem(1),
         SafeRegisterItem(1, "Type registered using KClass' extension"),
+        DividerItem(2),
         SafeRegisterAlternativeItem(1, "Type registered using registerSafe function")
     )
 
@@ -50,7 +54,7 @@ class ViewHolderFactoryRegistryActivity : AppCompatActivity() {
 
         // Plus operator is defined for ViewHolderFactoryRegistries. You can extract definitions of
         // items to a factory. Then you can append these definitions to other factory using '+'.
-        val mergedFactories = factory + safeFactory
+        val mergedFactories = factory + safeFactory + DIVIDER_FACTORY
 
         val adapter = SimpleListAdapter(mergedFactories)
         adapter.submitList(items)
