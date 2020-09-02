@@ -1,59 +1,97 @@
+[![License](https://img.shields.io/badge/License-Apache%202.0-orange.svg)](https://opensource.org/licenses/Apache-2.0)
+
 # SimplerRecyclerView
 
-This is a small abstraction (<150 lines of code) focused on removing mundane parts of RecyclerView - 
-ViewHolders creation and binding them with items from the adapter. There are no complex classes nor 
-fancy solutions, just simplification of existing mechanisms with tiny abstraction. 
- 
-Usage
------
+SimplerRecyclerView is a tiny abstraction (<150 lines of code) wraps up all the boring and
+tedious code that is required to make RecyclerView up and going and allows you to focus on important
+stuff - creating items that represent data to be presented and ViewHolders that are able to update UI
+accordingly.
 
- 1. Create classes representing data. Let them implement `RecyclerItem` interface. As a 
- viewHolderType provide layout resource that will be used by LayoutInflater to create View for a ViewHolder.
- 2. Create dedicated `AbstractViewHolder` classes for each item you just created.
- 3. Create an adapter using `SimpleListAdapter` and `ViewHolderFactory`, use one of the suggested
- approaches:
-  *  **Verbose approach** - Create custom Adapter class:
+## Usage
+
+### Basic usage sample
+Let's say you have a class `ParagraphItem `that represents data that will be displayed in `RecyclerView`
+and a layout `R.layout.item_paragraph` that should be used by ViewHolder.
+
+    data class ParagraphItem(
+        val text: CharSequence
+    )
+
+First you need to implement `RecyclerItem` interface:
+
+    data class ParagraphItem(
+        override val id: Int,
+        val text: CharSequence
+    ) : RecyclerItem {
+
+        override val viewHolderType = R.layout.item_paragraph
+    }
+
+Next you need to create a ViewHolder class that extends AbstractViewHolder, for example:
+
+    class ParagraphViewHolder(view: View) : AbstractViewHolder<ParagraphItem>(view) {
+        override fun bind(item: ParagraphItem) {
+            (itemView as TextView).text = item.text
+        }
+    }
+
+Now let's create an adapter that will be able to utilize both classes. The quickest approach is
+to create a `ViewHolderRegistry` that is responsible for creating `AbstractViewHolder` for specific
+`ParagraphItem::viewHolderType`:
+ 
+    val factory = ViewHolderFactoryRegistry().apply {
+        register(R.layout.item_paragraph) { ParagraphViewHolder(it) }
+    }
+
+Now you can create an adapter. Provided `SimpleListAdapter` is a very simple implementation that is
+good enough for the most popular use cases. Simply create it and attach to view holder:
+
+    adapter = SimpleListAdapter(factory)
+    recyclerView.adapter = adapter
+
+Please check `sampleViewHolderFactory` and `sampleCallbacks` packages for reference.
+
+### Creating custom adapter
+
+If you need to create custom adapter you may extend SimpleListAdapter, for example:
   
     class ExampleAdapter() : SimpleListAdapter<RecyclerItem>(
         viewHolderFactory = object : ViewHolderFactory<RecyclerItem> {
             override fun create(view: View, viewType: Int): AbstractViewHolder<RecyclerItem> {
                 return when (viewType) {
-                    R.layout.item_a -> AViewHolder(view)
-                    R.layout.item_b -> BViewHolder(view)
-                    R.layout.item_c -> CViewHolder(view)
-                    ...
+                    R.layout.item_pargraph -> ParagraphViewHolder(view)
                     else -> error("Unsupported view type")
                 } as AbstractViewHolder<RecyclerItem>
             }
         }
     )
 
-  *  **Lazy approach** - Create ViewHolderFactoryRegistry and provide it to SimpleListAdapter:
+### Registering factory functions in ViewHolderFactoryRegistry
+
+There are three register methods that you can use when registering factory methods.
 
     val factory = ViewHolderFactoryRegistry().apply {
-        // Option 1: make use of generics to validate types
+        // Option 1: make use of generics to validate types - if AViewHolder does not extend
+        // AbstractViewHolder<ItemA> compilation will fail
         ItemA::class.register(R.layout.item_a) { AViewHolder(it) }
+
         // Option 2: make use of generics to validate types - provide class as an argument
+        // IF BViewHolder does not extend AbstractViewHolder<ItemB> this method won't compile
         registerSafe(ItemB::class, R.layout.item_b) { BViewHolder(it) }
+
         // Option 3: don't validate types but make use of the most concise code
         register(R.layout.item_c) { CViewHolder(it) }
     }
-    adapter = SimpleListAdapter(factory)
 
- 4. Attach your adapter to a RecyclerView.
-
-That's it. You can sample implementation MainActivity and ExampleAdapter in the sample.
-
-Updating items on data change
------
+### Using payloads to update view holder
 
 In case you want to have more granular control over ViewHolder updates you may use 
 `ListAdapter::onBindViewHolder(VH holder, int position, List<Object> payloads)` method.
 `SimpleListAdapter` supports it out of the box. To use it you need to:
  1. In your `RecyclerItem` implement interface `UpdatableItem`.
  2. In your view holder change parent from `AbstractViewHolder` to `AbstractUpdatableViewHolder`
- 
-That's it. You can sample implementation in ClockItem and ClockViewHolder in the sample.
+
+Please check `sampleCounter` package for reference.
 
 License
 -------
