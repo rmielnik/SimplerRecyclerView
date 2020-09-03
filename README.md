@@ -9,6 +9,12 @@ accordingly.
 
 ## Usage
 
+### Setup
+
+Add to your build.gradle dependency:
+
+    implementation 'com.github.rmielnik:list:1.0.0'
+
 ### Basic usage sample
 Let's say you have a class `ParagraphItem `that represents data that will be displayed in `RecyclerView`
 and a layout `R.layout.item_paragraph` that should be used by ViewHolder.
