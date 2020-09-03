@@ -27,7 +27,7 @@ afterEvaluate {
             release(MavenPublication) {
                 from components.release
 
-                group = 'com.rmielnik'
+                group = 'com.github.rmielnik'
                 artifactId = 'list'
                 version = '1.0.0'
 

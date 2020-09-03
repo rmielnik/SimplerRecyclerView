@@ -7,7 +7,7 @@ android {
     buildToolsVersion "30.0.1"
 
     defaultConfig {
-        applicationId "com.rmielnik.list"
+        applicationId "com.github.rmielnik.list"
         minSdkVersion 14
         targetSdkVersion 30
         versionCode 1
